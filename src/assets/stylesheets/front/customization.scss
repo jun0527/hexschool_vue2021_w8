@@ -1,0 +1,23 @@
+//customizationBanner區塊
+.customizationBanner {
+  background: url('assets/images/juliana-malta-Ay6a4UDVJUY-unsplash.jpg');
+  background-size: cover;
+  background-position: 0 45%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.customizationFrom {
+  width: 500px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .customizationBanner {
+    height: 150px;
+    background-position: 0 80%;
+  }
+  .customizationFrom {
+    width: 100%;
+  }
+}

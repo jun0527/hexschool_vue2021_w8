@@ -1,0 +1,287 @@
+//卡片輪播
+.carouselDirectionBtn {
+  background: none;
+  border: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+}
+.leftBtn {
+  left: -10px;
+}
+.rightBtn {
+  right: -10px;
+}
+.leftBtn:active:not(.leftBtn:disabled) {
+  left: -8px;
+}
+.rightBtn:active:not(.rightBtn:disabled) {
+  right: -8px;
+}
+.carouselDirectionBtn i {
+  color: #4f4f4f;
+  font-size: 3rem;
+}
+.carouselDirectionBtn:active i:not(.carouselDirectionBtn:disabled i) {
+  font-size: 2.5rem;
+  opacity: 0.5;
+}
+.carouselDirectionBtn:focus {
+  box-shadow: none;
+}
+.cardCarousel {
+  width: 90%;
+  margin: 0 auto;
+}
+.carouselCardList {
+  transition: transform 0.3s ease-out;
+  transform: translatex(0px);
+}
+@media (max-width: 992px) {
+  .cardCarousel {
+    width: 85%;
+  }
+}
+@media (max-width: 768px) {
+  .cardCarousel {
+    width: 80%;
+  }
+  .carouselDirectionBtn i {
+    font-size: 2rem;
+  }
+  .carouselDirectionBtn:active i:not(.carouselDirectionBtn:disabled i) {
+    font-size: 1.5rem;
+    opacity: 0.5;
+  }
+}
+//card區域
+.card:hover {
+  cursor: pointer;
+  box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+}
+.card:hover .straight {
+  height: 120%;
+}
+.card:hover .horizontal {
+  width: 120%;
+}
+.card:hover .moreProductBtn {
+  background: #000;
+  color: #fff;
+}
+.addCardBtn:hover + .moreProductBtn,
+.favoriteArea:hover ~ .moreProductBtn {
+  background: #fff;
+  color: #000;
+}
+.cardList .icon {
+  position: absolute;
+  font-size: 24px;
+  right: 0;
+}
+.productCard {
+  height: 100%;
+}
+.pictureArea {
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.straight {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+.horizontal {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+//摺疊選單
+.collapseList {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.collapseList a {
+  color: #212529;
+}
+.collapseList a:hover {
+  background: #f8f9fa;
+}
+.collapseList .collapseListActive {
+  background: #ffb342;
+  color: #fff;
+}
+.collapseList .collapseListActive:hover {
+  background: #ffb342;
+}
+//購買流程區塊
+.buySteps .buyStepsItem {
+  width: 150px;
+  text-align: center;
+  padding: 10px 0;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+.stepActive {
+  background: #212529;
+  color: #fff;
+}
+.buySteps i {
+  font-size: 32px;
+}
+//loading
+.loading {
+  background: rgba($color: #000000, $alpha: 0.7);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+.loading .icon {
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 80px;
+  border-radius: 0 50px 50px 0;
+  position: absolute;
+  z-index: 10;
+  perspective: 200px;
+  transform: rotateY(0deg);
+  animation: bgColor1 1.5s step-end infinite both, rotate 1.5s step-start infinite both;
+  transform-origin: 0 50%;
+}
+
+.loading .icon:after {
+  content: '';
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: -40px;
+  width: 40px;
+  height: 80px;
+  border-radius: 50px 0 0 50px;
+  background: #ccc;
+  animation: bgColor2 1.5s step-end infinite both;
+}
+
+.loading .icon:before {
+  content: '';
+  position: absolute;
+  z-index: 11;
+  top: 0;
+  left: 0px;
+  width: 40px;
+  height: 80px;
+  border-radius: 0 50px 50px 0;
+  transform-origin: 0 50%;
+  transform: rotateY(0deg) rotateZ(0deg);
+  animation: flipColor 1.5s linear infinite both, flip 1.5s linear infinite both;
+}
+
+@keyframes bgColor1 {
+  0% {
+    background: #ffd539;
+  }
+  50% {
+    background: #3a71f8;
+  }
+  100% {
+    background: #3a71f8;
+  }
+}
+
+@keyframes bgColor2 {
+  0% {
+    background: #f52d27;
+  }
+  25% {
+    background: #00b262;
+  }
+  75% {
+    background: #f52d27;
+  }
+  100% {
+    background: #f52d27;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(90deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  75% {
+    transform: rotate(270deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+  12.5% {
+    transform: rotateY(90deg);
+  }
+  25% {
+    transform: rotateY(180deg);
+  }
+  37.5% {
+    transform: rotateY(90deg);
+  }
+  50% {
+    transform: rotateY(0deg);
+  }
+  62.5% {
+    transform: rotateY(90deg);
+  }
+  75% {
+    transform: rotateY(180deg);
+  }
+  87.5% {
+    transform: rotateY(90deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes flipColor {
+  0% {
+    background: #f52d27;
+  }
+  12.5% {
+    background: #7d0906;
+  }
+  25% {
+    background: #ffd539;
+  }
+  37.5% {
+    background: #9f7d00;
+  }
+  50% {
+    background: #00b262;
+  }
+  62.5% {
+    background: #00190e;
+  }
+  75% {
+    background: #3a71f8;
+  }
+  87.5% {
+    background: #052e94;
+  }
+  100% {
+    background: #f52d27;
+  }
+}

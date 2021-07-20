@@ -1,0 +1,62 @@
+//productsBanner區塊
+.productsBanner {
+  background: url('assets/images/wonderlane-GBHhIyWftHs-unsplash.jpg');
+  background-size: cover;
+  background-position: 0 40%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .productsBanner {
+    height: 150px;
+  }
+}
+.productMenu .icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+.iconActive {
+  transform: rotate(-180deg);
+  transition: transform 0.5s;
+}
+.productCard .favoriteArea {
+  position: absolute;
+  top: 210px;
+  right: 12px;
+  z-index: 1;
+}
+.favoriteArea {
+  padding: 0;
+  background: none;
+  border: none;
+}
+.card .favoriteArea i {
+  font-size: 32px;
+}
+.favoriteArea .hover,
+.favoriteArea:hover .icon,
+.favoriteArea.active .icon,
+.favoriteArea.active:hover .hover {
+  display: none;
+}
+.favoriteArea:hover .hover,
+.favoriteArea.active .hover,
+.favoriteArea.active:hover .icon {
+  display: block;
+}
+@media (max-width: 768px) {
+  .favoriteArea:hover .hover,
+  .favoriteArea.active:hover .icon {
+    display: none;
+  }
+  .favoriteArea:hover .icon,
+  .favoriteArea.active:hover .hover {
+    display: block;
+  }
+}

@@ -1,0 +1,70 @@
+//cartBanner區塊
+.cartBanner {
+  background: url('assets/images/clay-banks-31l-8hY1mt4-unsplash.jpg');
+  background-size: cover;
+  background-position: 0 50%;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 768px) {
+  .cartBanner {
+    height: 150px;
+  }
+}
+//購物車區塊
+.cartList .qtyArea i {
+  font-size: 24px;
+  padding: 0;
+}
+.cartList .qtyArea span {
+  font-size: 16px;
+  line-height: 38px;
+  width: 60px;
+}
+.cartList .deleteBtn {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.cartList .deleteBtn i {
+  font-size: 32px;
+}
+.useCouponArea input {
+  height: 30px;
+  width: 150px;
+  border-radius: 2px 0 0 2px;
+  border: 1px solid #000;
+}
+.useCouponArea input:disabled {
+  cursor: not-allowed;
+}
+.useCouponArea button {
+  height: 30px;
+  padding: 0 10px;
+  border-radius: 0;
+  margin-left: -1px;
+  border-radius: 0 2px 2px 0;
+}
+@media (max-width: 768px) {
+  .cartList .deleteBtn i {
+    font-size: 24px;
+  }
+  .cartList .qtyArea span {
+    font-size: 16px;
+    line-height: 38px;
+    width: 40px;
+  }
+}
+.noCart .icon {
+  font-size: 64px;
+}
+//購買人資料區塊
+.messageArea {
+  resize: none;
+}
+//結帳完成區塊
+.OrderCompleted i {
+  font-size: 64px;
+}

@@ -1,0 +1,29 @@
+.productPictureArea {
+  height: 400px;
+}
+.productContent .favoriteArea {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.productContent .favoriteArea i {
+  font-size: 32px;
+}
+.titleS {
+  width: 80px;
+  background: #f0f0f0;
+  text-align: center;
+  padding: 5px;
+}
+.qtyArea i {
+  font-size: 24px;
+  padding: 5px;
+}
+.qtyArea span {
+  // display: block;
+  // border-top: 1px solid #000;
+  // border-bottom: 1px solid #000;
+  font-size: 24px;
+  width: 100px;
+  text-align: center;
+}

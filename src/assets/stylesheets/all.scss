@@ -1,0 +1,14 @@
+@import '~bootstrap/scss/functions';
+@import './helpers/variables';
+@import '~bootstrap/scss/bootstrap';
+
+@import '@/assets/stylesheets/layout.scss';
+@import '@/assets/stylesheets/front/index.scss';
+@import '@/assets/stylesheets/front/products.scss';
+@import '@/assets/stylesheets/front/product.scss';
+@import '@/assets/stylesheets/front/customization.scss';
+@import '@/assets/stylesheets/front/cart.scss';
+@import '@/assets/stylesheets/front/signIn.scss';
+@import '@/assets/stylesheets/admin.scss';
+@import '@/assets/stylesheets/components.scss';
+@import '@/assets/stylesheets/helpers/animation.scss';

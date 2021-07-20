@@ -1,0 +1,67 @@
+//商品建立區域
+.productModal {
+  max-width: 80%;
+}
+.formGroup .isUploadImageBtn {
+  padding: 2px 5px;
+  font-size: 12px;
+  margin: 0 0 2px 10px;
+}
+.formGroup .upImage {
+  border: none;
+  width: auto;
+  cursor: pointer;
+}
+.formGroup .upImageBtn {
+  width: auto;
+  height: auto;
+  font-size: 14px;
+  padding: 5px;
+  background: #0080ff;
+  color: #fff;
+  border: none;
+  margin: 2px;
+}
+.formGroup .upImageBtn:disabled {
+  background: #6c757d;
+  cursor: auto;
+}
+.formGroup .cancelBtn {
+  background: #6c757d;
+}
+.formGroup .cancelBtn:hover {
+  background: #5c636a;
+}
+.formGroup textarea {
+  height: 60px;
+  resize: none;
+}
+.imagesUrlArea {
+  width: 88%;
+}
+.priceArea {
+  display: flex;
+  justify-content: space-between;
+}
+.priceArea .formGroup {
+  width: 32%;
+}
+.checkbox {
+  cursor: pointer;
+}
+//圖片預覽區域
+.previewPicture {
+  margin: 40px 30px 0 auto;
+  width: 80%;
+  height: 80%;
+}
+.previewPicture img::before {
+  position: absolute;
+  background: #fff;
+  color: #fff;
+  content: '圖片載入失敗或網址錯誤！';
+  display: block;
+}
+.checkbox:disabled {
+  cursor: not-allowed;
+}
