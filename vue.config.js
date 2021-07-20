@@ -1,7 +1,5 @@
 module.exports = {
-  publicPath: '/hexschool_vue2021_w8/'
-}
-module.exports = {
+  publicPath: '/hexschool_vue2021_w8/',
   chainWebpack: config => {
     config
       .plugin('html')
@@ -9,5 +7,5 @@ module.exports = {
         args[0].title= 'Pinpin'
         return args
       })
-  }
+  },
 }
