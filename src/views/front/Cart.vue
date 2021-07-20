@@ -99,8 +99,6 @@ export default {
       step: 1,
       cartData: {
         carts: [],
-        total: 3600,
-        final_total: 3700,
       },
       coupon: '',
       isUseCoupon: false,
