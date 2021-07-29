@@ -37,11 +37,11 @@
                 name="拼圖片數" rules="required" as="select"
                 v-model="tempData.piece">
                   <option value="" selected disabled>請選擇拼圖片數</option>
-                  <option value="100片">100片</option>
-                  <option value="500片">500片</option>
-                  <option value="1000片">1000片</option>
-                  <option value="2000片">2000片</option>
-                  <option value="4000片">4000片</option>
+                  <option value="100">100片</option>
+                  <option value="500">500片</option>
+                  <option value="1000">1000片</option>
+                  <option value="2000">2000片</option>
+                  <option value="4000">4000片</option>
                 </Field>
                 <ErrorMessage name="拼圖片數" class="invalid-feedback"></ErrorMessage>
               </div>
@@ -128,6 +128,37 @@
                 @change="changeStatus('newProduct')">
                 <label for="isNewProduct">本月新品</label>
               </div>
+              <div class="formGroup mb-3" v-if="modal === 'addProduct'">
+                <input type="checkbox" id="isSameProduct" name="isSameProduct"
+                @change="changeStatus('isSameProduct')">
+                <label for="isSameProduct">是否有同款拼圖</label>
+              </div>
+              <div class="formGroup mb-3" v-if="isSameProduct" :key="isSameProduct">
+                <label>所有同款拼圖片數：</label>
+                <input type="checkbox" id="100" value="100"
+                name="allPiece" v-model="tempData.allPiece">
+                <label class="me-3" for="100">100片</label>
+                <input type="checkbox" id="500" value="500"
+                name="allPiece" v-model="tempData.allPiece">
+                <label class="me-3" for="500">500片</label>
+                <input type="checkbox" id="1000" value="1000"
+                name="allPiece" v-model="tempData.allPiece">
+                <label class="me-3" for="1000">1000片</label>
+                <input type="checkbox" id="2000" value="2000"
+                name="allPiece" v-model="tempData.allPiece">
+                <label class="me-3" for="2000">2000片</label>
+                <input type="checkbox" id="4000" value="4000"
+                name="allPiece" v-model="tempData.allPiece">
+                <label class="me-3" for="4000">4000片</label>
+              </div>
+              <div class="formGroup mb-3" v-if="tempData.allPiece.length > 0 && isSameProduct">
+                <label for="sameProduct" class="form-label">同款拼圖順序</label>
+                <Field type="text" class="form-control"
+                :class="{'is-invalid': errors['同款拼圖順序']}" id="sameProduct"
+                name="同款拼圖順序" placeholder="請輸入同款拼圖順序"
+                :rules="sameProductNumRule" v-model.number="tempData.sameProductNum[0]"></Field>
+                <ErrorMessage name="同款拼圖順序" class="invalid-feedback"></ErrorMessage>
+              </div>
             </div>
             <div class="col-6 px-2">
               <h2 class="text-center">主圖預覽</h2>
@@ -170,14 +201,18 @@ export default {
         isNewProduct: false,
         style: [],
         piece: '',
+        allPiece: [],
+        sameProductNum: [1, 1],
       },
       isUploadImg: false,
       imgFiles: '',
       clearForm: false,
       editId: '',
       imagesFieldName: [],
+      isSameProduct: false,
     };
   },
+  emits: ['getProducts'],
   methods: {
     openModal() {
       this.productModal.show();
@@ -200,8 +235,11 @@ export default {
       this.tempData.isNewProduct = false;
       this.tempData.style = [];
       this.tempData.piece = '';
+      this.tempData.allPiece = [];
+      this.tempData.sameProductNum = [1, 1];
       this.editId = '';
       this.imagesFieldName = [];
+      this.isSameProduct = false;
     },
     isUrl(value) {
       const url = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([-.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
@@ -232,6 +270,15 @@ export default {
       }
       return true;
     },
+    sameProductNumRule(value) {
+      if (!value && this.tempData.allPiece.length > 0) {
+        return '同款拼圖總數大於0，請輸入同款拼圖順位';
+      }
+      if (value > this.tempData.allPiece.length) {
+        return '同款拼圖順位 必須在同款拼圖總數內';
+      }
+      return true;
+    },
     changeIsUploadImg() {
       this.imgFiles = '';
       this.isUploadImg = !this.isUploadImg;
@@ -253,8 +300,8 @@ export default {
             swal('圖片上傳失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     changeStatus(status) {
@@ -266,6 +313,10 @@ export default {
         }
       } else if (status === 'newProduct') {
         this.tempData.isNewProduct = !this.tempData.isNewProduct;
+      } else if (status === 'isSameProduct') {
+        this.isSameProduct = !this.isSameProduct;
+        this.tempData.allPiece = [];
+        this.tempData.sameProductNum = [1, 1];
       }
     },
     addImages() {
@@ -277,6 +328,16 @@ export default {
       this.imagesFieldName.pop();
     },
     postProduct(modal) {
+      this.tempData.piece = parseInt(this.tempData.piece, 10);
+      if (this.tempData.allPiece.length > 0) {
+        const allPiece = this.tempData.allPiece.map((item) => parseInt(item, 10));
+        allPiece.sort((a, b) => a - b);
+        this.tempData.allPiece = allPiece;
+        this.tempData.sameProductNum[1] = this.tempData.allPiece.length;
+      } else {
+        this.tempData.allPiece.push(this.tempData.piece);
+        this.tempData.sameProductNum = [1, 1];
+      }
       if (modal === 'addProduct') {
         const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/admin/product`;
         this.$http.post(url, { data: this.tempData })
@@ -289,8 +350,8 @@ export default {
               swal('商品建立失敗！');
             }
           })
-          .catch((err) => {
-            console.dir(err);
+          .catch(() => {
+            swal('網頁發生錯誤，請重新整理此頁面！');
           });
       } else {
         const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/admin/product/${this.editId}`;
@@ -304,8 +365,8 @@ export default {
               swal('商品修改失敗！');
             }
           })
-          .catch((err) => {
-            console.dir(err);
+          .catch(() => {
+            swal('網頁發生錯誤，請重新整理此頁面！');
           });
       }
     },

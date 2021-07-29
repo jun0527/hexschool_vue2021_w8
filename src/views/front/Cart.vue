@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container py-3 py-md-6" v-if="cartData.carts.length !== 0">
-      <buySteps :step="step"></buySteps>
+      <BuySteps :step="step"/>
       <table class="cartList table table-hover align-middle">
         <thead>
           <tr>
@@ -91,7 +91,7 @@
 </template>
 
 <script>
-import buySteps from '@/components/BuySteps.vue';
+import BuySteps from '@/components/BuySteps.vue';
 
 export default {
   data() {
@@ -106,7 +106,7 @@ export default {
     };
   },
   components: {
-    buySteps,
+    BuySteps,
   },
   methods: {
     getCartData() {
@@ -123,10 +123,22 @@ export default {
               }
             }
             this.cartLoading = false;
+          } else {
+            this.$swal({
+              title: '購物車資料讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     changeQty(cart, status) {
@@ -162,8 +174,13 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     deleteCartAlert(status, cart) {
@@ -212,8 +229,13 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     deleteAllCart() {
@@ -241,8 +263,13 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     useCoupon() {

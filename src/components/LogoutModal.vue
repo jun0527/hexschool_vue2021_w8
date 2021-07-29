@@ -49,8 +49,8 @@ export default {
             swal('登出失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
   },

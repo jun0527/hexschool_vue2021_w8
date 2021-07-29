@@ -50,6 +50,7 @@ export default {
       deleteCouponData: {},
     };
   },
+  emits: ['getCartData', 'getProducts', 'getOrder', 'getCouponsData'],
   methods: {
     openModal() {
       this.deleteModal.show();
@@ -75,8 +76,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     deleteAll() {
@@ -91,8 +92,8 @@ export default {
             swal('清空購物車失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     deleteOneProduct() {
@@ -108,8 +109,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     deleteOrder() {
@@ -125,8 +126,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     deleteAllOrder() {
@@ -142,8 +143,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     deleteCoupon() {
@@ -159,8 +160,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
   },

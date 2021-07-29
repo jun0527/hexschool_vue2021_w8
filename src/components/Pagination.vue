@@ -24,6 +24,7 @@
 
 <script>
 export default {
+  emits: ['getData'],
   props: ['paginationData'],
   methods: {
     changePage(page) {

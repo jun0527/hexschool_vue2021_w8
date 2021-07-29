@@ -10,7 +10,7 @@
     </nav>
     <div class="row mb-5 mb-md-9">
       <div class="productPictureArea col-md-6 d-flex justify-content-center
-      align-items-center mb-5 mb-md-0">
+      align-items-center">
         <img :src="product.imageUrl" alt="產品圖片"
         :class="{'straight': product.category === '直', 'horizontal': product.category === '橫'}">
       </div>
@@ -25,7 +25,15 @@
           <h3 class="h6 titleS">拼圖介紹</h3>
           <p>{{product.content}}</p>
           <h3 class="h6 titleS">拼圖資訊</h3>
-          <p class="mb-2">拼圖片數：{{product.piece}}</p>
+          <div class="mb-2">
+            <p v-if="product.allPiece.length === 1">拼圖片數：{{product.piece}}</p>
+            <div class="d-flex align-items-center" else>
+              <p class="mb-0">拼圖片數：</p>
+              <button type="button" class="btn btn-sm btn-outline-dark me-2 "
+              :class="{'active': piece === product.piece}" @click="toProduct(index)"
+              v-for="(piece, index) in product.allPiece" :key="piece">{{piece}}片</button>
+            </div>
+          </div>
           <p>拼圖風格：<span v-for="item in product.style" :key="item">{{item}}</span></p>
           <hr class="d-none d-md-block">
         </div>
@@ -55,8 +63,8 @@
     <hr class="d-block d-md-none">
     <div class="cardCarouselArea" ref="newProductRecommend" v-if="relatedProducts.length !== 0">
       <h2 class="text-center mb-3 mb-md-4 fw-bold">相關產品</h2>
-      <cardCarousel :carouselData="renderRelatedProducts"
-      @getProductData="getProductData" :key="renderRelatedProducts"></cardCarousel>
+      <CardCarousel :carouselData="renderRelatedProducts"
+      @getProductData="getProductData" @changePiece="changePiece" :key="renderRelatedProducts"/>
     </div>
   </div>
   <div class="loading" v-if="getProductLoading">
@@ -65,7 +73,7 @@
 </template>
 
 <script>
-import cardCarousel from '@/components/CardCarousel.vue';
+import CardCarousel from '@/components/CardCarousel.vue';
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
@@ -84,123 +92,8 @@ export default {
   data() {
     return {
       product: {},
-      allProducts: [
-        {
-          category: '直',
-          piece: '100片',
-          style: ['風景'],
-          activity: '本月新品',
-          content: '這是內容',
-          description: 'Sit down please 名設計師設計',
-          id: '-L9tH8jxVb2Ka_DYPwng2',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1625937151451.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=bLO%2BEo1MgVi8dIbwIxuXkwe3hqWXYGJWnQsh8P%2FuHM2%2FVBXZ5N6BpUJBQbDz78aP5kzXBLDwFWPnG%2BoPGO1BpgztTMhGbOYr6nD50RP%2F9wpkE4i61QhEhFagDKd2HmFxGLHxROkzh1zn9jip%2FeFG36%2B%2Beko3xgHHNuG9ghqG2VR69LfWPSxL%2F%2FjSyYitcl7EI2%2BFlWHRGy0x4tg4HeUSAhazJ%2FMvj%2FeclN7cq32flO6c4Z2hTJ%2FpZqEgtljV89NRZOUjg2gbRvKZCilI1IOCjHCM%2BNxLvYjoIvDIOXIz7%2FFiFZMOYrdI50nuiMZXudilexzrCRZ3%2FwqDcx1zGybSKg%3D%3D',
-          imagesUrl: [
-            '圖片網址一',
-            '圖片網址二',
-            '圖片網址三',
-            '圖片網址四',
-            '圖片網址五',
-          ],
-          is_enabled: 1,
-          num: 1,
-          origin_price: 600,
-          price: 500,
-          title: '東京鐵塔',
-          unit: '個',
-        },
-        {
-          category: '直',
-          piece: '500片',
-          style: ['風景'],
-          activity: '本月新品',
-          content: '這是內容',
-          description: 'Sit down please 名設計師設計',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1625937151451.png?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=bLO%2BEo1MgVi8dIbwIxuXkwe3hqWXYGJWnQsh8P%2FuHM2%2FVBXZ5N6BpUJBQbDz78aP5kzXBLDwFWPnG%2BoPGO1BpgztTMhGbOYr6nD50RP%2F9wpkE4i61QhEhFagDKd2HmFxGLHxROkzh1zn9jip%2FeFG36%2B%2Beko3xgHHNuG9ghqG2VR69LfWPSxL%2F%2FjSyYitcl7EI2%2BFlWHRGy0x4tg4HeUSAhazJ%2FMvj%2FeclN7cq32flO6c4Z2hTJ%2FpZqEgtljV89NRZOUjg2gbRvKZCilI1IOCjHCM%2BNxLvYjoIvDIOXIz7%2FFiFZMOYrdI50nuiMZXudilexzrCRZ3%2FwqDcx1zGybSKg%3D%3D',
-          imagesUrl: [
-            '圖片網址一',
-            '圖片網址二',
-            '圖片網址三',
-            '圖片網址四',
-            '圖片網址五',
-          ],
-          is_enabled: 1,
-          num: 1,
-          origin_price: 1000,
-          price: 600,
-          title: '東京鐵塔',
-          unit: '個',
-        },
-        {
-          category: '橫',
-          piece: '1000片',
-          style: ['風景'],
-          activity: '本月新品',
-          content: '這是內容',
-          description: 'Sit down please 名設計師設計',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1625380925789.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=f9uLvoPfl3QoONOzxq7eHe76nwqhdRhU%2BiwK6ewvPq5Ti6x0PFCHL8dhXJcJdp3oIdJ4jSj4R5c00QaqCBXDkuIYMOJB2RH7TkYLDEkeasgCVheh8bqzOTpb5dzonsFvUcjabF4q3nI%2Fi0U0XkiIfS9YMspVM7gD6fccMMgIAgl6jkuV%2BUuNCp6R%2FAaOuexmzBS7ArLFfhDinYVjmf%2Fn6E%2FWpCYE%2B9k%2F%2FZz%2Fbz68%2FmkHL2Op6ypnnjk7fPCoELB0a7hZtwKSoBQWvE2Q70m2dOOEw319uR3J4%2FoA%2F19wwkKGg1auo2OVWd7voZERFC5eD3LKlXuReCMELuEWf5M29g%3D%3D',
-          imagesUrl: [
-            '圖片網址一',
-            '圖片網址二',
-            '圖片網址三',
-            '圖片網址四',
-            '圖片網址五',
-          ],
-          is_enabled: 1,
-          num: 1,
-          origin_price: 1000,
-          price: 1000,
-          title: '熱氣球',
-          unit: '個',
-        },
-        {
-          category: '橫',
-          piece: '2000片',
-          style: ['風景'],
-          activity: '本月新品',
-          content: '這是內容',
-          description: 'Sit down please 名設計師設計',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1625380925789.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=f9uLvoPfl3QoONOzxq7eHe76nwqhdRhU%2BiwK6ewvPq5Ti6x0PFCHL8dhXJcJdp3oIdJ4jSj4R5c00QaqCBXDkuIYMOJB2RH7TkYLDEkeasgCVheh8bqzOTpb5dzonsFvUcjabF4q3nI%2Fi0U0XkiIfS9YMspVM7gD6fccMMgIAgl6jkuV%2BUuNCp6R%2FAaOuexmzBS7ArLFfhDinYVjmf%2Fn6E%2FWpCYE%2B9k%2F%2FZz%2Fbz68%2FmkHL2Op6ypnnjk7fPCoELB0a7hZtwKSoBQWvE2Q70m2dOOEw319uR3J4%2FoA%2F19wwkKGg1auo2OVWd7voZERFC5eD3LKlXuReCMELuEWf5M29g%3D%3D',
-          imagesUrl: [
-            '圖片網址一',
-            '圖片網址二',
-            '圖片網址三',
-            '圖片網址四',
-            '圖片網址五',
-          ],
-          is_enabled: 1,
-          num: 1,
-          origin_price: 1500,
-          price: 1500,
-          title: '熱氣球',
-          unit: '個',
-        },
-        {
-          category: '橫',
-          piece: '4000片',
-          style: ['風景'],
-          activity: '本月新品',
-          content: '這是內容',
-          description: 'Sit down please 名設計師設計',
-          id: '-L9tH8jxVb2Ka_DYPwng',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1625380925789.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=f9uLvoPfl3QoONOzxq7eHe76nwqhdRhU%2BiwK6ewvPq5Ti6x0PFCHL8dhXJcJdp3oIdJ4jSj4R5c00QaqCBXDkuIYMOJB2RH7TkYLDEkeasgCVheh8bqzOTpb5dzonsFvUcjabF4q3nI%2Fi0U0XkiIfS9YMspVM7gD6fccMMgIAgl6jkuV%2BUuNCp6R%2FAaOuexmzBS7ArLFfhDinYVjmf%2Fn6E%2FWpCYE%2B9k%2F%2FZz%2Fbz68%2FmkHL2Op6ypnnjk7fPCoELB0a7hZtwKSoBQWvE2Q70m2dOOEw319uR3J4%2FoA%2F19wwkKGg1auo2OVWd7voZERFC5eD3LKlXuReCMELuEWf5M29g%3D%3D',
-          imagesUrl: [
-            '圖片網址一',
-            '圖片網址二',
-            '圖片網址三',
-            '圖片網址四',
-            '圖片網址五',
-          ],
-          is_enabled: 1,
-          num: 1,
-          origin_price: 2500,
-          price: 2500,
-          title: '熱氣球',
-          unit: '個',
-        },
-      ],
+      allProducts: [],
+      products: [],
       relatedProducts: [],
       renderRelatedProducts: [],
       myFavorite: storageMethods.get() || [],
@@ -211,7 +104,7 @@ export default {
   },
   props: ['id'],
   components: {
-    cardCarousel,
+    CardCarousel,
   },
   methods: {
     getProductData(id = this.id) {
@@ -222,30 +115,90 @@ export default {
           if (res.data.success) {
             this.product = res.data.product;
             this.getAllProductsData();
+            // this.allProductsProcessing();
             this.getProductLoading = false;
+          } else {
+            this.$swal({
+              title: '產品資訊讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     getAllProductsData() {
       const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(url)
         .then((res) => {
-          this.allProducts = res.data.products;
-          this.getRelatedProducts();
+          if (res.data.success) {
+            this.allProducts = res.data.products;
+            this.allProductsProcessing();
+          } else {
+            this.$swal({
+              title: '產品資訊讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
+    },
+    allProductsProcessing() {
+      this.products = [];
+      this.allProducts.forEach((product) => {
+        if (product.sameProductNum[0] === 1 && product.sameProductNum[1] > 1) {
+          this.products.push(product);
+          const filterIndex = this.products.length - 1;
+          this.products[filterIndex].currentIdIndex = 0;
+          this.products[filterIndex].allId = [];
+          this.allProducts.forEach((item) => {
+            if (product.title === item.title && product.id !== item.id) {
+              product.allPiece.forEach((piece, index) => {
+                if (piece === item.piece) {
+                  this.products[filterIndex].allId[index] = item.id;
+                } else if (piece === product.piece) {
+                  this.products[filterIndex].allId[index] = product.id;
+                }
+              });
+            }
+          });
+        } else if (product.sameProductNum[1] === 1) {
+          this.products.push(product);
+          const filterIndex = this.products.length - 1;
+          this.products[filterIndex].currentIdIndex = 0;
+          this.products[filterIndex].allId = [];
+          this.products[filterIndex].allId.push(product.id);
+        }
+        if (product.title === this.product.title) {
+          const filterIndex = this.products.length - 1;
+          this.product.allId = this.products[filterIndex].allId;
+        }
+      });
+      this.getRelatedProducts();
     },
     getRelatedProducts() {
       this.relatedProducts = [];
       this.product.style.forEach((style) => {
-        this.allProducts.forEach((item) => {
+        this.products.forEach((item) => {
           item.style.forEach((key) => {
-            if (style === key && item.id !== this.product.id) {
+            if (style === key && item.title !== this.product.title) {
               this.relatedProducts.push(item);
             }
           });
@@ -323,15 +276,70 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
+    },
+    changePiece(item, index, idIndex) {
+      this.renderRelatedProducts[index].currentIdIndex = idIndex;
+      const id = item.allId[idIndex];
+      const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/product/${id}`;
+      this.$http.get(url)
+        .then((res) => {
+          if (res.data.success) {
+            this.renderRelatedProducts[index].id = res.data.product.id;
+            this.renderRelatedProducts[index].price = res.data.product.price;
+            this.renderRelatedProducts[index].origin_price = res.data.product.origin_price;
+          } else {
+            this.$swal({
+              title: '產品切換失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
+        })
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
+        });
+    },
+    toProduct(index) {
+      const id = this.product.allId[index];
+      this.$router.push(`/product/${id}`);
+      this.getProductData(id);
     },
   },
   created() {
     this.getProductData();
     this.emitter.on('getProductData', (id) => {
       this.getProductData(id);
+    });
+    this.emitter.on('addMyFavorite', (item) => {
+      this.addMyFavorite(item);
+    });
+    this.emitter.on('getFavorite', () => {
+      this.myFavorite = storageMethods.get();
+    });
+  },
+  unmounted() {
+    this.emitter.off('getProductData', (id) => {
+      this.getProductData(id);
+    });
+    this.emitter.off('addMyFavorite', (item) => {
+      this.addMyFavorite(item);
+    });
+    this.emitter.off('getFavorite', () => {
+      this.myFavorite = storageMethods.get();
     });
   },
 };

@@ -58,26 +58,51 @@
         <p class="text-center">請先留下基本資料，我們將派專人與您聯絡。</p>
         <div class="row">
           <Form class="customizationFrom" v-slot="{ errors }" @submit="sendData" :key="isClearData">
+            <p><span class="text-danger">*</span>為必填</p>
             <div class="mb-3">
-              <label for="name" class="form-label">姓名</label>
+              <label for="name" class="form-label">姓名
+                <span class="text-danger">*</span></label>
               <Field id="name" name="姓名" type="text"
               class="form-control" :class="{ 'is-invalid': errors['姓名'] }"
               placeholder="請輸入姓名" rules="required" v-model="user.name"></Field>
               <ErrorMessage name="姓名" class="invalid-feedback"></ErrorMessage>
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">Email</label>
+              <label for="email" class="form-label">Email
+                <span class="text-danger">*</span></label>
               <Field id="email" name="email" type="email"
               class="form-control" :class="{ 'is-invalid': errors['email'] }"
               placeholder="請輸入 Email" rules="email|required" v-model="user.email"></Field>
               <ErrorMessage name="email" class="invalid-feedback"></ErrorMessage>
             </div>
             <div class="mb-3">
-              <label for="tel" class="form-label">手機</label>
+              <label for="tel" class="form-label">手機
+                <span class="text-danger">*</span></label>
               <Field id="tel" name="手機" type="tel"
               class="form-control" :class="{ 'is-invalid': errors['手機'] }"
               placeholder="請輸入手機" :rules="isPhone" v-model="user.tel"></Field>
               <ErrorMessage name="手機" class="invalid-feedback"></ErrorMessage>
+            </div>
+            <div class="mb-3">
+              <label for="paymentMethod" class="form-label">課製拼圖片數
+                <span class="text-danger">*</span></label>
+              <Field id="paymentMethod" name="課製拼圖片數"
+              class="form-control" :class="{ 'is-invalid': errors['課製拼圖片數'] }"
+              rules="required" v-model="piece" as="select">
+                <option value="" selected disabled>請選擇課製拼圖片數</option>
+                <option value="100片">100片</option>
+                <option value="500片">500片</option>
+                <option value="1000片">1000片</option>
+                <option value="2000片">2000片</option>
+                <option value="4000片">4000片</option>
+              </Field>
+              <ErrorMessage name="課製拼圖片數" class="invalid-feedback"></ErrorMessage>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">留言</label>
+              <Field id="message" name="留言" type="text"
+              class="form-control messageArea"
+              placeholder="若有其他需求可在此處說明" v-model="message" as="textarea"></Field>
             </div>
             <div class="mb-3 d-flex justify-content-center">
               <button class="btn btn-primary" type="submit">送出</button>
@@ -98,6 +123,8 @@ export default {
         email: '',
         tel: '',
       },
+      piece: '',
+      message: '',
       isClearData: true,
       move: {
         graduation: false,

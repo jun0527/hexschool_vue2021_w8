@@ -62,8 +62,13 @@ export default {
             swal('登入失敗，請確認email及密碼是否正確！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
   },

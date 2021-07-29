@@ -1,6 +1,18 @@
 .productPictureArea {
   height: 400px;
 }
+@media (max-width: 768px) {
+  .productPictureArea {
+    height: 300px;
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 414px) {
+  .productPictureArea {
+    height: 250px;
+    margin-bottom: 1rem;
+  }
+}
 .productContent .favoriteArea {
   position: absolute;
   top: 0;
@@ -14,6 +26,7 @@
   background: #f0f0f0;
   text-align: center;
   padding: 5px;
+  margin-bottom: 16px;
 }
 .qtyArea i {
   font-size: 24px;

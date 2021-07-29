@@ -19,6 +19,7 @@ export default {
       collapseList: {},
     };
   },
+  emits: ['changeOption'],
   props: ['listItem', 'option', 'activeOption'],
   methods: {
     collapseSwitch() {

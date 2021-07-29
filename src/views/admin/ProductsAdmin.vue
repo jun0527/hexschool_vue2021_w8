@@ -19,7 +19,7 @@
       <tbody>
         <tr class="align-middle" v-for="(item, index) in products" :key="item.id">
           <td>{{item.title}}</td>
-          <td>{{item.piece}}</td>
+          <td>{{item.piece}}片</td>
           <td>{{item.origin_price}}</td>
           <td>{{item.price}}</td>
           <td>
@@ -38,20 +38,20 @@
         </tr>
       </tbody>
     </table>
-    <pagination :paginationData="paginationData" @getData="getProductsData"></pagination>
+    <Pagination :paginationData="paginationData" @getData="getProductsData"/>
   </div>
   <div class="loading" v-if="getProductsLoading">
     <div class="icon"></div>
   </div>
-  <productModal ref="productModal" @getProducts="getProductsData"></productModal>
-  <deleteModal ref="deleteModal" @getProducts="getProductsData"></deleteModal>
+  <ProductModal ref="productModal" @getProducts="getProductsData"/>
+  <DeleteModal ref="deleteModal" @getProducts="getProductsData"/>
 </template>
 
 <script>
 import swal from 'sweetalert';
-import productModal from '@/components/ProductModal.vue';
-import deleteModal from '@/components/DeleteModal.vue';
-import pagination from '@/components/Pagination.vue';
+import ProductModal from '@/components/ProductModal.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
+import Pagination from '@/components/Pagination.vue';
 
 export default {
   data() {
@@ -63,9 +63,9 @@ export default {
     };
   },
   components: {
-    productModal,
-    deleteModal,
-    pagination,
+    ProductModal,
+    DeleteModal,
+    Pagination,
   },
   methods: {
     getProductsData(page = 1) {
@@ -78,10 +78,12 @@ export default {
             this.products = res.data.products;
             this.paginationData = res.data.pagination;
             this.getProductsLoading = false;
+          } else {
+            swal('產品資料讀取失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     changeStatus(status, index) {
@@ -114,24 +116,15 @@ export default {
             swal('更新產品狀態失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     openModal(modal, index) {
       if (modal === 'editProduct') {
-        this.$refs.productModal.tempData.title = this.products[index].title;
-        this.$refs.productModal.tempData.category = this.products[index].category;
-        this.$refs.productModal.tempData.imageUrl = this.products[index].imageUrl;
-        this.$refs.productModal.tempData.content = this.products[index].content;
-        this.$refs.productModal.tempData.origin_price = this.products[index].origin_price;
-        this.$refs.productModal.tempData.price = this.products[index].price;
-        this.$refs.productModal.tempData.unit = this.products[index].unit;
-        this.$refs.productModal.tempData.is_enabled = this.products[index].is_enabled;
-        this.$refs.productModal.tempData.isNewProduct = this.products[index].isNewProduct;
-        this.$refs.productModal.tempData.style = this.products[index].style;
-        this.$refs.productModal.tempData.piece = this.products[index].piece;
+        this.$refs.productModal.tempData = { ...this.products[index] };
         this.$refs.productModal.editId = this.products[index].id;
+        this.$refs.productModal.isSameProduct = true;
       }
       this.$refs.productModal.modal = modal;
       this.$refs.productModal.openModal();

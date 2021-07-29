@@ -32,6 +32,7 @@ export default {
       page: '',
     };
   },
+  emits: ['getOrders'],
   methods: {
     openModal() {
       this.changeStatusModal.show();
@@ -56,8 +57,8 @@ export default {
             this.closeModal();
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
   },

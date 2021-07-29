@@ -145,6 +145,9 @@ button:disabled {
   .dropdownCartList .cartPictureArea {
     display: none;
   }
+  .favoriteLi .cartPictureArea {
+    display: flex;
+  }
   .qtyBtn:hover .hover {
     display: none;
   }

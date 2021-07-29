@@ -37,6 +37,9 @@
   transition: transform 0.3s ease-out;
   transform: translatex(0px);
 }
+.carouselCardList .pieceBtnArea {
+  top: 35px;
+}
 @media (max-width: 992px) {
   .cardCarousel {
     width: 85%;
@@ -70,6 +73,7 @@
   color: #fff;
 }
 .addCardBtn:hover + .moreProductBtn,
+.pieceBtnArea:hover ~ .moreProductBtn,
 .favoriteArea:hover ~ .moreProductBtn {
   background: #fff;
   color: #000;
@@ -83,10 +87,25 @@
   height: 100%;
 }
 .pictureArea {
-  height: 200px;
+  height: 145px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+@media (max-width: 992px) {
+  .pictureArea {
+    height: 135px;
+  }
+}
+@media (max-width: 768px) {
+  .pictureArea {
+    height: 200px;
+  }
+}
+@media (max-width: 414px) {
+  .pictureArea {
+    height: 150px;
+  }
 }
 .straight {
   display: block;

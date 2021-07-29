@@ -17,9 +17,9 @@
           </a>
           <div class="dropdownCartList dropdown-menu dropdown-menu-end p-4 overflow-auto
           position-absolute">
-            <dropdownFavoriteList listName="mobileMyFavoriteList"
+            <DropdownFavoriteList listName="mobileMyFavoriteList"
             @closeDropdownList="closeDropdownList"
-            @getFavoriteData="getFavoriteData"></dropdownFavoriteList>
+            @getFavoriteData="getFavoriteData"/>
           </div>
         </div>
         <div>
@@ -32,8 +32,8 @@
           <div class="dropdownCartList dropdown-menu dropdown-menu-end p-4 overflow-auto
           position-absolute">
             <div v-if="JSON.stringify(cartData) !== '{}'">
-              <dropdownCartList :cartData="cartData" listName="mobileDropdownList"
-              @getCartData="getCartData" @closeDropdownList="closeDropdownList"></dropdownCartList>
+              <DropdownCartList :cartData="cartData" listName="mobileDropdownList"
+              @getCartData="getCartData" @closeDropdownList="closeDropdownList"/>
             </div>
           </div>
         </div>
@@ -64,9 +64,9 @@
           <div class="dropdownCartList dropdown-menu dropdown-menu-end p-4 overflow-auto
           position-absolute">
             <div>
-              <dropdownFavoriteList listName="myFavoriteList"
+              <DropdownFavoriteList listName="myFavoriteList"
               @closeDropdownList="closeDropdownList"
-              @getFavoriteData="getFavoriteData"></dropdownFavoriteList>
+              @getFavoriteData="getFavoriteData"/>
             </div>
           </div>
         </div>
@@ -80,8 +80,8 @@
           </a>
           <div class="dropdownCartList dropdown-menu dropdown-menu-end p-4 overflow-auto">
             <div v-if="JSON.stringify(cartData) !== '{}'">
-              <dropdownCartList :cartData="cartData" listName="dropdownCartList"
-              @getCartData="getCartData" @closeDropdownList="closeDropdownList"></dropdownCartList>
+              <DropdownCartList :cartData="cartData" listName="dropdownCartList"
+              @getCartData="getCartData" @closeDropdownList="closeDropdownList"/>
             </div>
           </div>
         </div>
@@ -101,8 +101,8 @@
 
 <script>
 import { Collapse, Dropdown } from 'bootstrap';
-import dropdownCartList from '@/components/DropdownCartList.vue';
-import dropdownFavoriteList from '@/components/DropdownFavoriteList.vue';
+import DropdownCartList from '@/components/DropdownCartList.vue';
+import DropdownFavoriteList from '@/components/DropdownFavoriteList.vue';
 
 const storageMethods = {
   get() {
@@ -129,8 +129,8 @@ export default {
     };
   },
   components: {
-    dropdownCartList,
-    dropdownFavoriteList,
+    DropdownCartList,
+    DropdownFavoriteList,
   },
   methods: {
     closeCollapse() {
@@ -148,10 +148,22 @@ export default {
         .then((res) => {
           if (res.data.success) {
             this.cartData = res.data.data;
+          } else {
+            this.$swal({
+              title: '購物車資料讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
   },
@@ -170,6 +182,14 @@ export default {
     this.mobileDropdownList = new Dropdown(this.$refs.mobileDropdownList);
     this.myFavoriteList = new Dropdown(this.$refs.myFavoriteList);
     this.mobileMyFavoriteList = new Dropdown(this.$refs.mobileMyFavoriteList);
+  },
+  unmounted() {
+    this.emitter.off('getCartData', () => {
+      this.getCartData();
+    });
+    this.emitter.off('getfavoriteProduct', () => {
+      this.getFavoriteData();
+    });
   },
 };
 </script>

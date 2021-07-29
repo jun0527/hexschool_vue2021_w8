@@ -7,7 +7,7 @@
       </div>
     </div>
     <div class="container py-3 py-md-6" v-if="JSON.stringify(order) !== '{}'">
-      <buySteps :step="step" v-if="!isPayment"></buySteps>
+      <BuySteps :step="step" v-if="!isPayment"/>
       <div class="row justify-content-center">
         <div class="col-md-8">
           <div class="OrderCompleted text-center pb-3 mb-4 bg-secondary" v-if="isPayment">
@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import buySteps from '@/components/BuySteps.vue';
+import BuySteps from '@/components/BuySteps.vue';
 
 export default {
   data() {
@@ -106,7 +106,7 @@ export default {
   },
   props: ['id'],
   components: {
-    buySteps,
+    BuySteps,
   },
   methods: {
     getOrderData() {
@@ -119,10 +119,22 @@ export default {
             this.getOrderDate();
             this.getCartId(this.order.products);
             this.paymentLoading = false;
+          } else {
+            this.$swal({
+              title: '訂單資訊讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     getCartId(carts) {
@@ -164,8 +176,13 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
   },

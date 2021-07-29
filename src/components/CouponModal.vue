@@ -76,6 +76,7 @@ export default {
       clearForm: false,
     };
   },
+  emits: ['getCouponsData'],
   methods: {
     openModal() {
       this.clearForm = false;
@@ -132,8 +133,8 @@ export default {
               this.closeModal();
             }
           })
-          .catch((err) => {
-            console.dir(err);
+          .catch(() => {
+            swal('網頁發生錯誤，請重新整理此頁面！');
           });
       } else if (modal === 'editCoupon') {
         const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/admin/coupon/${this.tempData.id}`;
@@ -148,8 +149,8 @@ export default {
               this.closeModal();
             }
           })
-          .catch((err) => {
-            console.dir(err);
+          .catch(() => {
+            swal('網頁發生錯誤，請重新整理此頁面！');
           });
       }
     },

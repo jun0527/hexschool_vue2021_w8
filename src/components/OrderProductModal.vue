@@ -4,10 +4,17 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header bg-dark">
-          <h5 class="modal-title text-white" id="exampleModalLabel">訂單產品</h5>
+          <h5 class="modal-title text-white" id="exampleModalLabel">訂單資訊</h5>
           <button type="button" class="btn-close btn-close-white" @click="closeModal"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" v-if="JSON.stringify(order) !== '{}'">
+          <h2 class="h4 fw-bold">購買資料</h2>
+          <p>付款日期：{{paidDate}}</p>
+          <p>訂單編號：{{order.id}}</p>
+          <p>付款方式：{{order.user.payment_method}}</p>
+          <p>留言：{{order.message}}</p>
+          <hr>
+          <h2 class="h4 fw-bold">購買產品</h2>
           <p v-for="product in products" :key="product.title">
             {{product.title}} x {{product.qty}}
           </p>
@@ -29,6 +36,7 @@ export default {
       orderProductModal: {},
       order: {},
       products: [],
+      paidDate: '',
     };
   },
   methods: {
@@ -48,6 +56,10 @@ export default {
         obj.qty = this.order.products[item].qty;
         this.products.push(obj);
       });
+    },
+    getPaidDate() {
+      const date = new Date(this.order.paid_date * 1000);
+      this.paidDate = `${date.getFullYear()}/${(0 + String(date.getMonth() + 1)).slice(-2)}/${date.getDate()}`;
     },
   },
   mounted() {

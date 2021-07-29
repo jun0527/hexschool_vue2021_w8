@@ -25,10 +25,36 @@
   transform: rotate(-180deg);
   transition: transform 0.5s;
 }
+.pieceBtnArea {
+  position: absolute;
+  top: 32px;
+  left: 0;
+}
+.pieceBtn {
+  border-width: 1px;
+  color: $dark;
+  background: #fff;
+  margin-right: 8px;
+}
+.pieceBtn:nth-last-child(1) {
+  margin-right: 0;
+}
+.pieceBtn:hover {
+  background: $dark;
+  color: #fff;
+}
+.pieceBtn.active {
+  background: $dark;
+  color: #fff;
+  cursor: auto;
+}
+.pieceBtn.active:hover {
+  background: $dark;
+  color: #fff;
+}
 .productCard .favoriteArea {
   position: absolute;
-  top: 210px;
-  right: 12px;
+  top: -8px;
   z-index: 1;
 }
 .favoriteArea {

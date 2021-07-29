@@ -50,17 +50,32 @@ export default {
       myFavoriteProducts: [],
     };
   },
+  emits: ['getFavoriteData', 'closeDropdownList'],
   props: ['listName'],
   methods: {
     getAllProductsData() {
       const url = `${process.env.VUE_APP_URL}api/${process.env.VUE_APP_PATH}/products/all`;
       this.$http.get(url)
         .then((res) => {
-          this.allProducts = res.data.products;
-          this.getFavoriteProducts();
+          if (res.data.success) {
+            this.allProducts = res.data.products;
+            this.getFavoriteProducts();
+          } else {
+            this.$swal({
+              title: '我的收藏讀取失敗！',
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
+          }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     getFavoriteProducts() {
@@ -76,9 +91,15 @@ export default {
     deleteFavorite(item, index) {
       this.myFavorite.splice(index, 1);
       storageMethods.save(this.myFavorite);
+      this.$swal({
+        title: `將${item.title}從收藏列表中移除！`,
+        showConfirmButton: false,
+        icon: 'success',
+        timer: 2000,
+      });
       this.$emit('getFavoriteData');
       this.getAllProductsData();
-      this.emitter.emit('addMyFavorite', item);
+      this.emitter.emit('getFavorite', item);
     },
     toOtherPages(pagesName, id) {
       if (pagesName === 'cart') {
@@ -95,6 +116,12 @@ export default {
   mounted() {
     this.getAllProductsData();
     this.emitter.on('getfavoriteProduct', () => {
+      this.myFavorite = storageMethods.get();
+      this.getAllProductsData();
+    });
+  },
+  unmounted() {
+    this.emitter.off('getfavoriteProduct', () => {
       this.myFavorite = storageMethods.get();
       this.getAllProductsData();
     });

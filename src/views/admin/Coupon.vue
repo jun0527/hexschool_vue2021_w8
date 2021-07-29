@@ -23,10 +23,7 @@
           <td>
             <input type="checkbox" class="checkbox" :id="item.id"
             @change="changeStatus(item.is_enabled, item)" :checked="item.is_enabled===1">
-            <label :for="item.id" class="btnWrap">
-              <span class="btnInside"></span>
-            </label>
-            <span class="isEnabled">{{item.is_enabled === 1 ? '啟用' : '不啟用'}}</span>
+            <label :for="item.id" class="checkbox">{{item.is_enabled === 1 ? '啟用' : '不啟用'}}</label>
           </td>
           <td>
             <button type="button" class="btn btn-primary me-2"
@@ -44,13 +41,13 @@
   <div class="loading" v-if="getCouponLoading">
     <div class="icon"></div>
   </div>
-  <couponModal ref="couponModal" @getCouponsData="getCouponData"></couponModal>
-  <deleteModal ref="deleteModal" @getCouponsData="getCouponData"></deleteModal>
+  <CouponModal ref="couponModal" @getCouponsData="getCouponData"/>
+  <DeleteModal ref="deleteModal" @getCouponsData="getCouponData"/>
 </template>
 
 <script>
-import couponModal from '@/components/CouponModal.vue';
-import deleteModal from '@/components/DeleteModal.vue';
+import CouponModal from '@/components/CouponModal.vue';
+import DeleteModal from '@/components/DeleteModal.vue';
 import pagination from '@/components/Pagination.vue';
 import swal from 'sweetalert';
 
@@ -63,8 +60,8 @@ export default {
     };
   },
   components: {
-    couponModal,
-    deleteModal,
+    CouponModal,
+    DeleteModal,
     pagination,
   },
   methods: {
@@ -78,10 +75,12 @@ export default {
             this.coupons = res.data.coupons;
             this.pagination = res.data.pagination;
             this.getCouponLoading = false;
+          } else {
+            swal('優惠券資料讀取失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          swal('網頁發生錯誤，請重新整理此頁面！');
         });
     },
     openModal(modal, item) {
@@ -115,8 +114,13 @@ export default {
             swal('優惠券啟用狀態更改失敗！');
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
   },

@@ -27,13 +27,13 @@
     </div>
   </nav>
   <div class="wrap container">
-    <router-view></router-view>
-    <logoutModal ref="logoutModal"></logoutModal>
+    <router-view v-if="check"></router-view>
+    <LogoutModal ref="logoutModal"/>
   </div>
 </template>
 
 <script>
-import logoutModal from '@/components/LogoutModal.vue';
+import LogoutModal from '@/components/LogoutModal.vue';
 
 export default {
   data() {
@@ -42,7 +42,7 @@ export default {
     };
   },
   components: {
-    logoutModal,
+    LogoutModal,
   },
   methods: {
     checkSignIn() {
@@ -54,7 +54,21 @@ export default {
           } else {
             this.check = false;
             this.$router.push('/signIn');
+            this.$swal({
+              title: `${res.data.message}`,
+              showConfirmButton: false,
+              icon: 'error',
+              timer: 2000,
+            });
           }
+        })
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
     openModal() {
@@ -64,8 +78,6 @@ export default {
   created() {
     const myCookie = document.cookie.replace(/(?:(?:^|.*;\s*)vue2021_w7\s*=\s*([^;]*).*$)|^.*$/, '$1');
     this.$http.defaults.headers.common.Authorization = myCookie;
-  },
-  mounted() {
     this.checkSignIn();
   },
 };

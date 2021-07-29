@@ -6,7 +6,7 @@
       </div>
     </div>
     <div class="container py-3 py-md-6">
-      <buySteps :step="step"></buySteps>
+      <BuySteps :step="step"/>
       <div class="row justify-content-center">
         <div class="col-lg-6 col-md-8">
           <h3 class="text-center fw-bold">購買人資料</h3>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import buySteps from '@/components/BuySteps.vue';
+import BuySteps from '@/components/BuySteps.vue';
 
 export default {
   data() {
@@ -95,7 +95,7 @@ export default {
     };
   },
   components: {
-    buySteps,
+    BuySteps,
   },
   methods: {
     toCustomizationFrom() {
@@ -130,8 +130,13 @@ export default {
             });
           }
         })
-        .catch((err) => {
-          console.dir(err);
+        .catch(() => {
+          this.$swal({
+            title: '網頁發生錯誤，請重新整理此頁面！',
+            showConfirmButton: false,
+            icon: 'error',
+            timer: 2000,
+          });
         });
     },
   },
