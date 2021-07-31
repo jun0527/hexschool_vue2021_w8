@@ -48,17 +48,17 @@
             <option value="拼圖風格">拼圖風格</option>
           </select>
           <select class="form-select mb-3" v-if="selectOption.pieceShow === true"
-          @click="changeOption(selectOption.piece, selectOption.menu)"
+          @change="changeOption(selectOption.piece, selectOption.menu)"
           v-model="selectOption.piece">
             <option value=""  disabled selected>請選擇拼圖片數</option>
-            <option value="100片">100片</option>
-            <option value="500片">500片</option>
-            <option value="1000片">1000片</option>
-            <option value="2000片">2000片</option>
-            <option value="4000片">4000片</option>
+            <option value="100">100片</option>
+            <option value="500">500片</option>
+            <option value="1000">1000片</option>
+            <option value="2000">2000片</option>
+            <option value="4000">4000片</option>
           </select>
           <select class="form-select mb-3" v-if="selectOption.styleShow === true"
-          @click="changeOption(selectOption.style, selectOption.menu)"
+          @change="changeOption(selectOption.style, selectOption.menu)"
           v-model="selectOption.style">
             <option value="" disabled selected>請選擇拼圖風格</option>
             <option value="風景">風景</option>
@@ -230,7 +230,7 @@ export default {
       products: [],
       filterAllProducts: [],
       renderProducts: [],
-      piece: [100, 500, 1000, 2000, 4000],
+      piece: ['100', '500', '1000', '2000', '4000'],
       style: ['風景', '建築', '動物', '插畫', '繪畫工作室'],
       openCollapse: {
         pieceCollapse: false,
@@ -323,6 +323,8 @@ export default {
       this.getProductListLoading = true;
       this.filterAllProducts = [];
       this.activeOption = option;
+      this.selectOption.piece = '';
+      this.selectOption.style = '';
       if (option === '全部拼圖') {
         this.products.forEach((item) => {
           this.filterAllProducts.push(item);
@@ -340,12 +342,16 @@ export default {
           }
         });
       } else if (optionName === '拼圖片數') {
+        this.selectOption.piece = option;
         this.products.forEach((item) => {
-          if (item.piece === option) {
-            this.filterAllProducts.push(item);
-          }
+          item.allPiece.forEach((piece) => {
+            if (piece.toString() === option) {
+              this.filterAllProducts.push(item);
+            }
+          });
         });
       } else if (optionName === '拼圖風格') {
+        this.selectOption.style = option;
         this.products.forEach((item) => {
           item.style.forEach((i) => {
             if (i === option) {
@@ -366,6 +372,14 @@ export default {
       this.filterAllProducts.forEach((item, index) => {
         if (minNum <= index && index <= maxNum) {
           this.renderProducts.push(item);
+        }
+      });
+      this.renderProducts.forEach((item, index) => {
+        if (item.piece.toString() !== this.selectOption.piece && this.selectOption.piece !== '') {
+          const pieceIndex = item.allPiece.indexOf(parseInt(this.selectOption.piece, 10));
+          this.changePiece(item, index, pieceIndex);
+        } else if (this.selectOption.piece === '') {
+          this.changePiece(item, index, 0);
         }
       });
       this.getProductListLoading = false;
@@ -389,8 +403,8 @@ export default {
     changeSelectOption() {
       this.selectOption.pieceShow = false;
       this.selectOption.styleShow = false;
-      this.selectOption.piece = '';
-      this.selectOption.style = '';
+      // this.selectOption.piece = '';
+      // this.selectOption.style = '';
       if (this.selectOption.menu === '拼圖片數') {
         this.selectOption.pieceShow = true;
       } else if (this.selectOption.menu === '拼圖風格') {
@@ -429,6 +443,7 @@ export default {
           if (res.data.success) {
             this.renderProducts[index].id = res.data.product.id;
             this.renderProducts[index].price = res.data.product.price;
+            this.renderProducts[index].piece = res.data.product.piece;
             this.renderProducts[index].origin_price = res.data.product.origin_price;
           } else {
             this.$swal({
