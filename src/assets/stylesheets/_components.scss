@@ -104,7 +104,7 @@
 }
 @media (max-width: 414px) {
   .pictureArea {
-    height: 150px;
+    height: 145px;
   }
 }
 .straight {
@@ -133,6 +133,10 @@
 }
 .collapseList .collapseListActive:hover {
   background: #ffb342;
+}
+//分頁按鈕
+.page-link:disabled {
+  cursor: auto;
 }
 //購買流程區塊
 .buySteps .buyStepsItem {

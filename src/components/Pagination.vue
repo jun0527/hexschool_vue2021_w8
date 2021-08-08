@@ -10,7 +10,8 @@
       <li class="page-item" v-for="page in paginationData.total_pages" :key="page"
         :class="{'active': page === paginationData.current_page}">
         <button type="button" class="page-link"
-        @click="changePage(page)">{{page}}</button>
+        @click="changePage(page)"
+        :disabled="page === paginationData.current_page">{{page}}</button>
       </li>
       <li class="page-item" :class="{'disabled': !paginationData.has_next}">
         <button type="button" class="page-link" aria-label="Next"

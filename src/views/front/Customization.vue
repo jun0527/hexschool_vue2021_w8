@@ -33,7 +33,7 @@
         <div class="col-md-4 mb-3 d-none d-md-block">
           <div class="h-100 d-flex flex-column justify-content-center
           align-items-center bg-secondary">
-            <h3 class="fw-bold mb-1 mb-md-3">將美好的回憶變成拼圖</h3>
+            <h3 class="fw-bold text-center mb-1 mb-md-3">將美好的回憶<br>變成拼圖</h3>
             <button type="button" class="btn btn-primary" @click="toCustomizationFrom">
               預約客製拼圖
             </button>
@@ -84,7 +84,7 @@
               <ErrorMessage name="手機" class="invalid-feedback"></ErrorMessage>
             </div>
             <div class="mb-3">
-              <label for="paymentMethod" class="form-label">課製拼圖片數
+              <label for="paymentMethod" class="form-label">客製拼圖片數
                 <span class="text-danger">*</span></label>
               <Field id="paymentMethod" name="課製拼圖片數"
               class="form-control" :class="{ 'is-invalid': errors['課製拼圖片數'] }"
@@ -183,6 +183,8 @@ export default {
       this.user.name = '';
       this.user.email = '';
       this.user.tel = '';
+      this.piece = '';
+      this.message = '';
     },
   },
   mounted() {

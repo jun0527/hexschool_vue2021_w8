@@ -65,7 +65,6 @@
             <option value="建築">建築</option>
             <option value="動物">動物</option>
             <option value="插畫">插畫</option>
-            <option value="繪畫工作室">繪畫工作室</option>
           </select>
         </div>
         <div class="col-md-9">
@@ -73,9 +72,9 @@
             <li ref="card" class="col-xl-4 col-md-6 mb-3"
             v-for="(item, index) in renderProducts" :key="item.id">
               <div class="card productCard" @click="toProduct(item.id)">
-                <div class="pictureArea overflow-hidden card-img-top">
+                <div class="pictureArea overflow-hidden card-img-top position-relative">
                   <img :src="item.imageUrl" alt="產品圖片"
-                  :class="{'straight': item.category === '直', 'horizontal': item.category === '橫'}">
+                  class="horizontal">
                 </div>
                 <div class="card-body d-flex flex-column justify-content-between">
                   <div class="position-relative">
@@ -139,99 +138,13 @@ const storageMethods = {
 export default {
   data() {
     return {
-      allProducts: [
-        {
-          category: '直',
-          content: '不管是家中萌寵或是野生動物，讓我們通過拼圖捕捉到不同環境中動物的美。',
-          id: '-Mek70Tqzln2V4pU3Ktt',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1626452455847.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=FETkKRvONZMYNc94v4azsGJ4aU2XNw9Vj%2F%2FIBpDJzzECE3yhaU%2B9M3Ku1C6zesTnOj%2Bo1aXLaT8XMNglb4s3G5DOkRw%2FtUmvUnvoWcsHwg3x1YtGf1nxKtPNkiFcf5zLysuj6syQwkonoT0Z0qIMLsoqJwy9L%2BBQj9D2Pgs%2BIBP%2Fsg2YKa0bpDqd4Gv9l0Fb3on%2F7r5SW2dEU638mH35AOJEy3AgGRQNZxyEibo47tZrLj1LqWNRU42kZmmmeccSpTCXpKI2X1D20tT75WOI%2BTxp1yMHgGd%2BPSKe9BtoVdcGueAnEoKCYamTPQtG7XWCuGq2qvZDtTg1QNGS87KBeQ%3D%3D',
-          isNewProduct: true,
-          is_enabled: 1,
-          num: 1,
-          origin_price: 1250,
-          piece: '2000',
-          price: 1250,
-          style: ['動物'],
-          title: '貓咪寫真',
-          unit: '個',
-          allPiece: ['1000', '2000', '3000'],
-          sameProductNum: [1, 3],
-        },
-        {
-          category: '直',
-          content: '不管是家中萌寵或是野生動物，讓我們通過拼圖捕捉到不同環境中動物的美。',
-          id: '-Mek70Tqzln2V4pU3K00',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1626452455847.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=FETkKRvONZMYNc94v4azsGJ4aU2XNw9Vj%2F%2FIBpDJzzECE3yhaU%2B9M3Ku1C6zesTnOj%2Bo1aXLaT8XMNglb4s3G5DOkRw%2FtUmvUnvoWcsHwg3x1YtGf1nxKtPNkiFcf5zLysuj6syQwkonoT0Z0qIMLsoqJwy9L%2BBQj9D2Pgs%2BIBP%2Fsg2YKa0bpDqd4Gv9l0Fb3on%2F7r5SW2dEU638mH35AOJEy3AgGRQNZxyEibo47tZrLj1LqWNRU42kZmmmeccSpTCXpKI2X1D20tT75WOI%2BTxp1yMHgGd%2BPSKe9BtoVdcGueAnEoKCYamTPQtG7XWCuGq2qvZDtTg1QNGS87KBeQ%3D%3D',
-          isNewProduct: true,
-          is_enabled: 1,
-          num: 2,
-          origin_price: 1750,
-          piece: '1000',
-          price: 1750,
-          style: ['動物'],
-          title: '貓咪寫真',
-          unit: '個',
-          allPiece: ['1000', '2000', '3000'],
-          sameProductNum: [2, 3],
-        },
-        {
-          category: '直',
-          content: '不管是家中萌寵或是野生動物，讓我們通過拼圖捕捉到不同環境中動物的美。',
-          id: '-Mek70Tqzln2V4pU3K11',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1626452455847.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=FETkKRvONZMYNc94v4azsGJ4aU2XNw9Vj%2F%2FIBpDJzzECE3yhaU%2B9M3Ku1C6zesTnOj%2Bo1aXLaT8XMNglb4s3G5DOkRw%2FtUmvUnvoWcsHwg3x1YtGf1nxKtPNkiFcf5zLysuj6syQwkonoT0Z0qIMLsoqJwy9L%2BBQj9D2Pgs%2BIBP%2Fsg2YKa0bpDqd4Gv9l0Fb3on%2F7r5SW2dEU638mH35AOJEy3AgGRQNZxyEibo47tZrLj1LqWNRU42kZmmmeccSpTCXpKI2X1D20tT75WOI%2BTxp1yMHgGd%2BPSKe9BtoVdcGueAnEoKCYamTPQtG7XWCuGq2qvZDtTg1QNGS87KBeQ%3D%3D',
-          isNewProduct: true,
-          is_enabled: 1,
-          num: 2,
-          origin_price: 1750,
-          piece: '3000',
-          price: 1750,
-          style: ['動物'],
-          title: '貓咪寫真',
-          unit: '個',
-          allPiece: ['1000', '2000', '3000'],
-          sameProductNum: [3, 3],
-        },
-        {
-          category: '橫',
-          content: '繪畫工作室系列：看似臨亂的桌面有著畫家自己的規則，藉由畫作與周遭顏料畫具的連結，突顯中間的畫作，讓人感受到繪畫的神奇。',
-          id: '-Mek6dBWKfbTr7snHcyY',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1626452397225.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=nuY5LSUL0fH2rJnuoi%2FWl52Fs3PH8z9L5I83Hj7eVMjZUWXzuQ8uc4ZgP8Vr1zEaiPXtbLVZU4cvZqM7E6tlIx6TnDoKQ2Dqou6RtBfng%2FE2rYdw%2BIloCO6Ra7Iro01k8yYT2IltjvC5Ot2tQTc0%2FzsIqwbX%2FJflSF5A6UG2wlhgzhM7f1Hbr%2B4Ejx9hYcPtw4A5%2BTvL1ydHJnoBiO9OAWPKRaVGoU0MiKFOlNgGYWaan6xLAfae%2Fzv%2BoBpsnkv2XViQ8Ac%2FzYFd5gECFv44JPF%2BFzUvGPz%2FQhVTIwIz%2F7cruFQsOiryfCBnFepuq0E1HinlFgUz2GLyoBZO3kv2PA%3D%3D',
-          isNewProduct: true,
-          is_enabled: 1,
-          num: 3,
-          origin_price: 1250,
-          piece: '1000',
-          price: 1250,
-          style: ['繪畫工作室'],
-          title: '雙色錦鯉',
-          unit: '個',
-          allPiece: ['1000'],
-          sameProductNum: [1, 1],
-        },
-        {
-          category: '橫',
-          content: '透過拼圖，帶我們欣賞各國不同的風景。',
-          id: '-Mek4j2xGtnQkt8yqWdk',
-          imageUrl: 'https://storage.googleapis.com/vue-course-api.appspot.com/jun0527/1626451889682.jpg?GoogleAccessId=firebase-adminsdk-zzty7%40vue-course-api.iam.gserviceaccount.com&Expires=1742169600&Signature=C42cKGQBEy3z8bBS3jwtHwWobKydOpm6HwajhQ8nCPkbsDrClHI8yKCpFgYFfau4PXqvLOUPvyPJitntqA6x4D%2BvPRilxqI2PwduWtOWwDRfn8slIlSWTDzhhB91PQ%2FUt5Sjuy74623mwJYUIMOtg97Z2Y0rDqCckg3XQWcDieCiTBI2Kb6pMHxWi6ZDJKSIv0f1QX7ZgYFaVwnrUWFz03oSsbI3V7JmvF%2FBLJpesjeaUz2O%2BtIMX9TH3BONL6B%2Bs7FWbkkQ0A6kbQTOkxB7Ggzd5M%2BntPJto2xmlLpzqN%2Fe2iNlkQhjpV3BXFYYA9tQJVBM9BOFtzV3zudAIVK4bg%3D%3D',
-          isNewProduct: false,
-          is_enabled: 1,
-          num: 9,
-          origin_price: 2500,
-          piece: '4000',
-          price: 2300,
-          style: ['風景', '建築'],
-          title: '淺間神社',
-          unit: '個',
-          allPiece: ['4000'],
-          sameProductNum: [1, 1],
-        },
-      ],
+      allProducts: [],
       paginationData: {},
       products: [],
       filterAllProducts: [],
       renderProducts: [],
       piece: ['100', '500', '1000', '2000', '4000'],
-      style: ['風景', '建築', '動物', '插畫', '繪畫工作室'],
+      style: ['風景', '建築', '動物', '插畫'],
       openCollapse: {
         pieceCollapse: false,
         styleCollapse: false,
@@ -246,7 +159,7 @@ export default {
       },
       saleOption: false,
       myFavorite: storageMethods.get() || [],
-      getProductListLoading: false,
+      getProductListLoading: true,
     };
   },
   components: {
@@ -382,18 +295,21 @@ export default {
           this.changePiece(item, index, 0);
         }
       });
-      this.getProductListLoading = false;
+      setTimeout(() => {
+        this.getProductListLoading = false;
+      }, 300);
     },
     getPaginationData(page = 1) {
+      this.getProductListLoading = true;
       const pageData = {};
       pageData.total_pages = Math.ceil(this.filterAllProducts.length / 10);
       pageData.current_page = page;
-      if (pageData.category + 1 > pageData.total_pages) {
+      if (pageData.current_page + 1 > pageData.total_pages) {
         pageData.has_next = false;
       } else {
         pageData.has_next = true;
       }
-      if (pageData.category === 1) {
+      if (pageData.current_page === 1) {
         pageData.has_pre = false;
       } else {
         pageData.has_pre = true;

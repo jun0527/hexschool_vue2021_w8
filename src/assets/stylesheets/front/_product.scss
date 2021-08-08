@@ -28,6 +28,9 @@
   padding: 5px;
   margin-bottom: 16px;
 }
+.productContent .pieceBtn:disabled {
+  opacity: 1;
+}
 .qtyArea i {
   font-size: 24px;
   padding: 5px;

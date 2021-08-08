@@ -116,9 +116,6 @@
                 <input type="checkbox" id="illustration" value="插畫"
                 name="style" v-model="tempData.style">
                 <label class="me-3" for="illustration">插畫</label>
-                <input type="checkbox" id="paintingStudio" value="繪畫工作室"
-                name="style" v-model="tempData.style">
-                <label class="me-3" for="paintingStudio">繪畫工作室</label>
               </div>
               <div class="formGroup mb-3" v-if="modal === 'addProduct'">
                 <input type="checkbox" id="is_enabled" name="is_enabled"

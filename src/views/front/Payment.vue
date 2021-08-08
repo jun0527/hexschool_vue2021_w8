@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap payment">
     <div class="cartBanner">
       <div class="titleArea">
         <h2 v-if="isPayment">結帳完成</h2>
@@ -15,13 +15,13 @@
             <h3 class="h2">交易成功</h3>
             <p class="h5">感謝購買，產品將於 1~3 個工作天出貨！</p>
           </div>
-          <table class="cartList table table-hover align-middle mb-4">
+          <table class="cartList table table-hover align-middle mb-0">
             <thead>
               <tr class="text-center">
                 <th width="20%" class="d-none d-md-table-cell">圖示</th>
-                <th width="25%">產品名稱</th>
+                <th width="50%">產品名稱</th>
                 <th width="20%">數量</th>
-                <th width="20%">單價</th>
+                <th width="30%">單價</th>
               </tr>
             </thead>
             <tbody>
@@ -38,21 +38,17 @@
                 <td>NT${{toCurrency(item.product.price)}}</td>
               </tr>
             </tbody>
-            <tfoot>
-              <tr class="text-center" v-if="originPrice !== order.total">
-                <td class="border-0 d-none d-md-table-cell"></td>
-                <td class="border-0"></td>
-                <td class="text-end border-0">優惠券折扣</td>
-                <td class="border-0">-NT${{toCurrency(originPrice - order.total)}}</td>
-              </tr>
-              <tr class="text-center">
-                <td class="border-0 d-none d-md-table-cell"></td>
-                <td class="border-0"></td>
-                <td class="text-end border-0">總金額</td>
-                <td class="h5 fw-bold border-0">NT${{toCurrency(order.total)}}</td>
-              </tr>
-            </tfoot>
           </table>
+          <div class="d-flex justify-content-end align-items-center px-2 py-2">
+            <p class="mb-0">優惠券折扣</p>
+            <p class="totalPrice mb-0 ms-3">
+              -NT${{toCurrency(originPrice - order.total)}}</p>
+          </div>
+          <div class="d-flex justify-content-end align-items-center px-2 py-2 mb-4">
+            <p class="mb-0">總金額</p>
+            <p class="totalPrice h5 fw-bold mb-0 ms-3">
+              NT${{toCurrency(order.total)}}</p>
+          </div>
           <div class="mb-4">
             <h3 class="h4 fw-bold border-bottom border-2 border-dark px-2 mb-0">訂單資訊</h3>
             <div class="bg-secondary p-3">

@@ -7,7 +7,7 @@
     </div>
     <div class="container py-3 py-md-6" v-if="cartData.carts.length !== 0">
       <BuySteps :step="step"/>
-      <table class="cartList table table-hover align-middle">
+      <table class="cartList table table-hover align-middle text-center">
         <thead>
           <tr>
             <th width="20%" class="d-none d-md-table-cell">圖示</th>
@@ -19,7 +19,7 @@
         </thead>
         <tbody>
           <tr v-for="item in cartData.carts" :key="item.id">
-            <td class="d-none d-md-table-cell">
+            <td class="d-none d-md-table-cell d-flex justify-content-center">
               <div class="cartPictureArea">
                 <img :src="item.product.imageUrl" alt="產品圖片"
                 :class="{'straight': item.product.category === '直',
@@ -28,7 +28,7 @@
             </td>
             <td>【{{item.product.piece}}】{{item.product.title}}</td>
             <td>
-              <div class="qtyArea d-flex">
+              <div class="qtyArea d-flex justify-content-center">
                 <button class="qtyBtn" type="button" @click="changeQty(item, 'reduce')"
                 :disabled="item.qty === 1">
                   <i class="icon bi bi-dash-square"></i>

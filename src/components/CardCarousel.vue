@@ -11,10 +11,15 @@
           <li ref="card" class="col-lg-4 col-md-6 mb-3"
             v-for="(item, index) in carouselData" :key="item.id">
               <div class="card productCard" @click="toProduct(item.id)">
-                <div :class="{'card-img-top': item.category === '橫'}"
+                <!-- <div :class="{'card-img-top': item.category === '橫'}"
                 class="pictureArea overflow-hidden">
                   <img :src="item.imageUrl" alt="產品圖片"
                   :class="{'straight': item.category === '直', 'horizontal': item.category === '橫'}">
+                </div> -->
+                <div :class="{'card-img-top': item.category === '橫'}"
+                class="pictureArea overflow-hidden">
+                  <img :src="item.imageUrl" alt="產品圖片"
+                  class="horizontal">
                 </div>
                 <div class="card-body">
                   <div class="position-relative">

@@ -25,6 +25,38 @@
   transform: rotate(-180deg);
   transition: transform 0.5s;
 }
+.cardList .pictureBtn {
+  position: absolute;
+  color: #000;
+  font-weight: bold;
+  top: 10%;
+  left: 5%;
+  width: 90%;
+  height: 80%;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.7s;
+}
+.cardList .pictureArea:hover .pictureBtn {
+  opacity: 0.7;
+}
+// .hoverText {
+//   position: absolute;
+//   color: #000;
+//   font-weight: bold;
+//   top: 10%;
+//   left: 5%;
+//   width: 90%;
+//   height: 80%;
+//   opacity: 0;
+//   // display: none;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   transition: opacity 0.7s;
+// }
 .pieceBtnArea {
   position: absolute;
   top: 32px;
@@ -52,6 +84,17 @@
   background: $dark;
   color: #fff;
 }
+// .searchBtn {
+//   padding: 0;
+//   width: 28px;
+//   border: 1px solid #000;
+//   border-radius: 2px;
+// }
+// .productCard .searchBtn {
+//   position: absolute;
+//   top: -150px;
+//   z-index: 1;
+// }
 .productCard .favoriteArea {
   position: absolute;
   top: -8px;

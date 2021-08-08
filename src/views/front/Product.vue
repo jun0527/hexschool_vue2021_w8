@@ -29,9 +29,10 @@
             <p v-if="product.allPiece.length === 1">拼圖片數：{{product.piece}}</p>
             <div class="d-flex align-items-center" else>
               <p class="mb-0">拼圖片數：</p>
-              <button type="button" class="btn btn-sm btn-outline-dark me-2 "
+              <button type="button" class="pieceBtn btn btn-sm btn-outline-dark me-2"
               :class="{'active': piece === product.piece}" @click="toProduct(index)"
-              v-for="(piece, index) in product.allPiece" :key="piece">{{piece}}片</button>
+              v-for="(piece, index) in product.allPiece" :key="piece"
+              :disabled="piece === product.piece">{{piece}}片</button>
             </div>
           </div>
           <p>拼圖風格：<span v-for="item in product.style" :key="item">{{item}}</span></p>
