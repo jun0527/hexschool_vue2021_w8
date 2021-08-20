@@ -89,7 +89,7 @@
               <Field id="paymentMethod" name="課製拼圖片數"
               class="form-control" :class="{ 'is-invalid': errors['課製拼圖片數'] }"
               rules="required" v-model="piece" as="select">
-                <option value="" selected disabled>請選擇課製拼圖片數</option>
+                <option value="" selected disabled>請選擇客製拼圖片數</option>
                 <option value="100片">100片</option>
                 <option value="500片">500片</option>
                 <option value="1000片">1000片</option>

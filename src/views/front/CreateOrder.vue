@@ -98,9 +98,6 @@ export default {
     BuySteps,
   },
   methods: {
-    toCustomizationFrom() {
-      document.documentElement.scrollTop = this.$refs.customizationFromArea.offsetTop - 152;
-    },
     isPhone(value) {
       if (!value) {
         return '手機 為必填';

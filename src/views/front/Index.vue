@@ -6,7 +6,7 @@
         <div class="slogan">
           <h2 class="text-white fw-bold mb-2">讓拼圖帶你進入</h2>
           <h2 class="text-white fw-bold mb-3">屬於你的娛樂時光</h2>
-          <h3 class="h5 text-white mb-4">－沉浸在拼圖的世界，享受拼圖的樂趣。</h3>
+          <h3 class="h5 d-none d-sm-block text-white mb-4">－沉浸在拼圖的世界，享受拼圖的樂趣。</h3>
           <button type="button" class="btn btn-primary"
           @click="$router.push('/products')">馬上選購</button>
         </div>

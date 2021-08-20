@@ -98,11 +98,17 @@
   }
 }
 @media (max-width: 768px) {
+  .cardCarousel .pictureArea {
+    height: 170px;
+  }
   .pictureArea {
     height: 200px;
   }
 }
 @media (max-width: 414px) {
+  .cardCarousel .pictureArea {
+    height: 125px;
+  }
   .pictureArea {
     height: 145px;
   }
